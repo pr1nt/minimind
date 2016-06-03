@@ -16,7 +16,6 @@ int scoreToWrite;
 
 int main()
 {
-	
 	SetConsoleCP(437);
 	SetConsoleOutputCP(437);
 	Game();
@@ -32,6 +31,7 @@ void Nickname() {
 	cin >> name;
 	gamersBase << name << "  " << scoreToWrite << "\n";
 	gamersBase.close();
+	cout << "Done, restarting...";
 }
 
 void Game() {
@@ -91,7 +91,7 @@ void Game() {
 				Game();
 			}
 		}
-		cout << "Your score: " << score << "\n";
+		cout << "Your current score: " << score << "\n";
 		score++;
 	}
 }
