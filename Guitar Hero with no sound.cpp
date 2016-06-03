@@ -4,19 +4,34 @@
 #include "stdafx.h"
 #include <iostream>
 #include <windows.h>
+#include <string>
 #include <conio.h>
+#include <fstream>
 
 using namespace std;
 
 void Game();
+void Nickname();
+int scoreToWrite;
 
 int main()
 {
+	
 	SetConsoleCP(437);
 	SetConsoleOutputCP(437);
 	Game();
 	system("pause");
 	return 0;
+}
+
+void Nickname() {
+	ofstream gamersBase;
+	gamersBase.open("scores.txt", ios_base::app);
+	string name;
+	cout << "Input player name: ";
+	cin >> name;
+	gamersBase << name << "  " << scoreToWrite << "\n";
+	gamersBase.close();
 }
 
 void Game() {
@@ -68,14 +83,15 @@ void Game() {
 			}
 			else{
 				cout << "Opps! Try again\n";
+				cout << "You ended with " << score << " points\n";
+				scoreToWrite = score;
+				Nickname();
 				Sleep(3000);
 				system("cls");
 				Game();
 			}
-			
 		}
 		cout << "Your score: " << score << "\n";
 		score++;
 	}
 }
-
