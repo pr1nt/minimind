@@ -12,7 +12,10 @@ using namespace std;
 
 void Game();
 void Nickname();
+void SeqGenerate();
+void DecodedOutput(int inCode);
 int scoreToWrite;
+int row[100];
 
 int main()
 {
@@ -35,14 +38,50 @@ void Nickname() {
 }
 
 void Game() {
-	int row[100];
 	int inRow[100];
+	SeqGenerate();
+	int score = 1;
+	for (int i = 0; i < 100; i++) {
+		for (int j = 0; j < score; j++) {
+			DecodedOutput(row[j]);
+			Sleep(700);
+		}
+		Sleep(1500);
+		system("cls");
+		cout << "Go!\n";
+		for (int j = 0; j < score; j++) {
+			inRow[j] = _getch();
+			inRow[j] = _getch();
+			DecodedOutput(inRow[j]);
+		}
+		cout << "\n";
+		for (int j = 0; j < score; j++) {
+			if (row[j] == inRow[j]) {
+				continue;
+			}
+			else{
+				cout << "Opps! Try again\n";
+				cout << "You ended with " << score << " points\n";
+				scoreToWrite = score;
+				Nickname();
+				Sleep(3000);
+				system("cls");
+				int row[100];
+				Game();
+			}
+		}
+		cout << "Your current score: " << score << "\n";
+		score++;
+	}
+}
+
+void SeqGenerate() {
 	int randSeedArr[100];
 	for (int i = 0; i < 100; i++) {
 		randSeedArr[i] = rand() % 4 + 1;
 	}
 	for (int i = 0; i < 100; i++) {
-		if (randSeedArr[i] == 1){
+		if (randSeedArr[i] == 1) {
 			row[i] = 75;
 		}
 		if (randSeedArr[i] == 2) {
@@ -55,43 +94,17 @@ void Game() {
 			row[i] = 77;
 		}
 	}
-	int score = 1;
-	for (int i = 0; i < 100; i++) {
-		for (int j = 0; j < score; j++) {
-			switch (row[j]) {
-				case 75: cout << (char)0x1B;
-					break;
-				case 72: cout << (char)0x18;
-					break;
-				case 80: cout << (char)0x19;
-					break;
-				case 77: cout << (char)0x1A; 
-					break;
-			}
-			Sleep(700);
-		}
-		Sleep(1500);
-		system("cls");
-		cout << "Go!\n";
-		for (int j = 0; j < score; j++) {
-			inRow[j] = _getch();
-			inRow[j] = _getch();
-		}
-		for (int j = 0; j < score; j++) {
-			if (row[j] == inRow[j]) {
-				continue;
-			}
-			else{
-				cout << "Opps! Try again\n";
-				cout << "You ended with " << score << " points\n";
-				scoreToWrite = score;
-				Nickname();
-				Sleep(3000);
-				system("cls");
-				Game();
-			}
-		}
-		cout << "Your current score: " << score << "\n";
-		score++;
+}
+
+void DecodedOutput(int inCode) {
+	switch (inCode) {
+	case 75: cout << (char)0x1B;
+		break;
+	case 72: cout << (char)0x18;
+		break;
+	case 80: cout << (char)0x19;
+		break;
+	case 77: cout << (char)0x1A;
+		break;
 	}
 }
